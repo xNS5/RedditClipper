@@ -8,16 +8,16 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      -uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@v1
       -name: Build XPI extension
+      uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@v1
         with:
           zipFilePath: build/${{ github.event.repository.name }}.zip
           xpiFilePath: build/${{ github.event.repository.name }}.xpi
-          jwtIssuer: ${{ secrets.JWT_ISSUER }}
-          jwtSecret: ${{ secrets.JWT_SECRET }}
+          jwtIssuer: ${{ env.JWT_ISSUER }}
+          jwtSecret: ${{ env.JWT_SECRET }}
 
-      -uses: actions/upload-artifact@v2
       -name: Upload signed extension
+      uses: actions/upload-artifact@v2
        with:
          name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name}}.xpi
          path: build/${{ github.event.repository.name }}.xpi
