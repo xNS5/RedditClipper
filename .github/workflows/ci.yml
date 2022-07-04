@@ -1,12 +1,13 @@
 name: Publish Signed Firefox Extension
 
 on:
-  push:
-    branches: [ main ]
-    tags: 'v*.*.*'
+  pull_request_review:
+    types: [submitted]
+
 
 jobs:
   build-and-publish:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
