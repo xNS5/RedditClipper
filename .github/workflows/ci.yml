@@ -1,13 +1,12 @@
 name: Publish Signed Firefox Extension
 
 on:
-  pull_request_review:
-    types: [submitted]
+  push:
+    branches: [ main ]
 
 
 jobs:
   build-and-publish:
-    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -19,6 +18,7 @@ jobs:
         with:
           cmd: build
           source: ./
+          filename: ${{ github.event.repository.name }}-${{ github.event.release.tag_name}}.xpi
 
       - name: "web-ext sign"
         id: web-ext-sign
