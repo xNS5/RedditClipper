@@ -26,8 +26,8 @@ jobs:
           cmd: sign
           source: ${{ steps.web-ext-build.outputs.target }}
           channel: unlisted
-          apiKey: ${{ env.JWT_ISSUER }}
-          apiSecret: ${{ env.JWT_SECRET }}
+          apiKey: ${{ secrets.JWT_ISSUER }}
+          apiSecret: ${{ secrets.JWT_SECRET }}
           timeout: 900000
 
       - name: "Create Release"
