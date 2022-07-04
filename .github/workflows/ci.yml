@@ -3,23 +3,38 @@ name: Publish Signed Firefox Extension
 on:
   push:
     branches: [ main ]
+    tags: 'v*.*.*'
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Build XPI extension
-        uses: cardinalby/webext-buildtools-firefox-sign-xpi-action@v1
-        with:
-          zipFilePath: build/${{ github.event.repository.name }}.zip
-          xpiFilePath: build/${{ github.event.repository.name }}.xpi
-          jwtIssuer: '${{ env.JWT_ISSUER }}'
-          jwtSecret: '${{ env.JWT_SECRET }}'
+  steps:
+    - name: "Checkout"
+      uses: actions/checkout@v1
 
-      - name: Upload signed extension
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name}}.xpi
-          path: build/${{ github.event.repository.name }}.xpi
+    - name: "web-ext build"
+      id: web-ext-build
+      uses: kewisch/action-web-ext@v1
+      with:
+        cmd: build
+        source: src
+
+    - name: "web-ext sign"
+      id: web-ext-sign
+      uses: kewisch/action-web-ext@v1
+      with:
+        cmd: sign
+        source: ${{ steps.web-ext-build.outputs.target }}
+        channel: unlisted
+        apiKey: ${{ env.JWT_ISSUER }}
+        apiSecret: ${{ env.JWT_SECRET }}
+        timeout: 900000
+
+    - name: "Create Release"
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name}}.xpi
+        path: ${{ steps.web-ext-build.outputs.target }}
 
 
