@@ -36,10 +36,13 @@ The re-formatted URl copied to the clipboard:
 
 \[foo](https://www.foo.bar)
 
-## Data Stored
+# Data Stored
 
 This extension in no way communicates with me. All it does is reads the highlighted text is present -> formats it -> sends it to your system clipboard. 
 
+# Installation
+
+I'm currently trying to work out the kinks on a Github Action script to automate releases to make it easier. If this is something that you want here and now, please go to Actions -> click on the most recent action -> download the artifact. It's a zipped file containing the extension. 
 
 # Issues
 
