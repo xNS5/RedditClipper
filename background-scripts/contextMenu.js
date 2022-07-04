@@ -17,8 +17,9 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 
     text += `[${text.length > 0 ? "Source" : curr_tab.title}](${escapeHTML(curr_tab.url)})`;
 
-    console.log(text);
-
+    navigator.clipboard.writeText(text).then(() => {
+        console.log(`Added "${text}" to clipboard`)
+    })
 });
 
 

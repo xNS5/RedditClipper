@@ -30,14 +30,6 @@
   "permissions": [
     "tabs",
     "contextMenus",
-    "storage",
-    "unlimitedStorage",
-    "clipboardRead",
-    "clipboardWrite",
-    "idle",
-    "http://*/*",
-    "https://*/*",
-    "webRequest",
-    "webRequestBlocking"
+    "clipboardWrite"
   ]
 }
