@@ -13,8 +13,8 @@ jobs:
         with:
           zipFilePath: build/${{ github.event.repository.name }}.zip
           xpiFilePath: build/${{ github.event.repository.name }}.xpi
-          jwtIssuer: ${{ env.JWT_ISSUER }}
-          jwtSecret: ${{ env.JWT_SECRET }}
+          jwtIssuer: '${{ env.JWT_ISSUER }}'
+          jwtSecret: '${{ env.JWT_SECRET }}'
 
       - name: Upload signed extension
         uses: actions/upload-artifact@v2
