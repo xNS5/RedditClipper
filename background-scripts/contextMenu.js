@@ -15,17 +15,9 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
         })
     }
 
-    text += `[${text.length > 0 ? "Source" : curr_tab.title}](${escapeHTML(curr_tab.url)})`;
+    text += `[${text.length > 0 ? "Source" : curr_tab.title}](${curr_tab.url})`;
 
     navigator.clipboard.writeText(text).then(() => {
         console.log(`Added "${text}" to clipboard`)
     })
 });
-
-
-function escapeHTML(str) {
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/"/g, "&quot;").replace(/'/g, "&#39;")
-        .replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
