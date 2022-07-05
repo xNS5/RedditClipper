@@ -3,7 +3,8 @@ name: Publish Signed Firefox Extension
 on:
   push:
     branches: [ main ]
-
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build-and-publish:
@@ -27,11 +28,7 @@ jobs:
 
       - name: Add Source To Release
         id: zipped-source
-        uses: thedoctor0/zip-release@main
-        with:
-          type: 'zip'
-          filename: 'source-code.zip'
-          exclusions: '*.git* *.zip *.xpi *CHANGELOG.md web-ext-artifacts/'
+        run: zip source-code.zip ./ -x '*.git* *.zip *.xpi *CHANGELOG.md web-ext-artifacts/'
 
 
       - name: "Create Release"
