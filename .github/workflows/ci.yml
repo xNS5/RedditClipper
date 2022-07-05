@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check output
-        run: echo ${{ needs.check_tag.outputs.run_other_jobs }} ${{ needs.check_tag.outputs.tag }}
+        run: echo ${{ needs.check_tag.outputs.run_other_jobs }} && echo ${{ needs.check_tag.outputs.tag }}
 
 
 
