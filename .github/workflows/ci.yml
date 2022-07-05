@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     tags:
-      - 'v*.*.*'
+      - '*'
 
 jobs:
   build-and-publish:
@@ -34,6 +34,7 @@ jobs:
       - name: "Create Release"
         uses: ncipollo/release-action@v1
         with:
+          draft: true
           artifacts: "${{ steps.web-ext-build.outputs.target }}, ${{ steps.zip-source.outputs.target }}"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           tag: "v1.0.3"
