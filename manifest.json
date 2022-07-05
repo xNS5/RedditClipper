@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "RedditClipper",
-  "version": "1.0.3",
+  "version": "1.0.4",
 
   "description": "Copies text to the system clipboard in markdown format.",
   "icons": {
