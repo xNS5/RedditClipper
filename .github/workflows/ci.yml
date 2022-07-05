@@ -29,7 +29,7 @@ jobs:
         with:
           type: 'zip'
           filename: 'source-code.zip'
-          exlcusions: '*.git* *.zip *.xpi'
+          exclusions: '*.git* *.zip *.xpi'
 
 
       - name: "Create Release"
