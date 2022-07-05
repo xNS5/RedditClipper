@@ -8,12 +8,14 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: "Checkout"
         uses: actions/checkout@v1
 
       - name: Generate Changelog
-        run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.txt
+        run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
 
       - name: "web-ext build"
         id: web-ext-build
@@ -29,18 +31,16 @@ jobs:
         with:
           type: 'zip'
           filename: 'source-code.zip'
-          exclusions: '*.git* *.zip *.xpi'
+          exclusions: '*.git* *.zip *.xpi *CHANGELOG.md web-ext-artifacts/'
 
 
       - name: "Create Release"
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.FF_RELEASE_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          draft: true
-          body_path: ${{ github.workspace }}-CHANGELOG.txt
-          files: |
-            ${{ steps.web-ext-build.outputs.target }}
-            ${{ steps.zip-source.outputs.target }}
+          artifacts: "${{ steps.web-ext-build.outputs.target }}, ${{ steps.zip-source.outputs.target }}"
+          bodyFile: "${{ github.workspace }}-CHANGELOG.md"
+          token: ${{ secrets.FF_RELEASE_TOKEN }}
+
+
 
 
