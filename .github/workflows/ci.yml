@@ -28,7 +28,7 @@ jobs:
 
       - name: Add Source To Release
         id: zipped-source
-        run: zip source-code.zip ./ -x '*.git* *.zip *.xpi *CHANGELOG.md web-ext-artifacts/'
+        run: zip -r source-code.zip . -x "\.*" "*.zip" "*.xpi" "*CHANGELOG.md" "web-ext-artifacts/"
 
 
       - name: "Create Release"
