@@ -36,10 +36,13 @@ The re-formatted URl copied to the clipboard:
 
 \[foo](https://www.foo.bar)
 
-## Data Stored
+# Data Stored
 
 This extension in no way communicates with me. All it does is reads the highlighted text is present -> formats it -> sends it to your system clipboard. 
 
+# Installation
+
+I'm currently trying to work out the kinks on a Github Action script to automate releases to make it easier. Currently the action artifact isn't signed by Mozilla so the resulting XPI file won't be installable. 
 
 # Issues
 
