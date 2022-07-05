@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       run_other_jobs: ${{ steps.check-tag.outputs.run_jobs }}
-    - name: check tag ${{ github.ref }}
+    steps:
+      - name: Check Tag ${{ github.ref }}
         id: check-tag
         run: |
           if [[${{ github.ref }} =~ refs\/tags\/release\/v[0-9]+\.[0-9]+\.0\.[0-9]+ ]]; then
@@ -45,8 +46,6 @@ jobs:
         with:
           cmd: build
           source: ./
-
-
 
       - name: Rename Output
         id: rename-web-ext
