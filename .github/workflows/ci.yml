@@ -18,6 +18,10 @@ jobs:
       - name: Generate Changelog
         run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md && echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
+      - name: Add Source To Release
+        id: zipped-source
+        run: zip -r source-code.zip . -x "\.*" "*.zip" "*.xpi" "*CHANGELOG.md" "web-ext-artifacts/"
+
       - name: "web-ext build"
         id: web-ext-build
         uses: kewisch/action-web-ext@v1
@@ -26,19 +30,9 @@ jobs:
           source: ./
           filename: "${{ github.event.repository.name }}.xpi"
 
-      - name: Add Source To Release
-        id: zipped-source
-        run: zip -r source-code.zip . -x "\.*" "*.zip" "*.xpi" "*CHANGELOG.md" "web-ext-artifacts/"
+      - name: Testing Results
+        run: ls -l
 
-
-      - name: "Create Release"
-        uses: ncipollo/release-action@v1
-        with:
-          draft: true
-          tag: $RELEASE_VERSION
-          artifacts: "${{ steps.web-ext-build.outputs.target }}, source-code.zip"
-          bodyFile: "${{ github.workspace }}-CHANGELOG.md"
-          token: ${{ secrets.FF_RELEASE_TOKEN }}
 
 
 
