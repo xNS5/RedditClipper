@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       run_other_jobs: ${{ steps.check-tag.outputs.run_jobs }}
-      tag: ${{ steps.check-tag.outputs.tag }}
+      tag_val: ${{ steps.check-tag.outputs.tag }}
     steps:
       - name: Check Tag ${{ github.ref }}
         id: check-tag
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check output
-        run: echo ${{ needs.check_tag.outputs.run_other_jobs }} && echo ${{ needs.check_tag.outputs.tag }}
+        run: echo ${{ needs.check_tag.outputs.run_other_jobs }} && echo ${{ needs.check_tag.outputs.tag_val }}
 
 
 
