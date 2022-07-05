@@ -31,7 +31,7 @@ jobs:
           filename: "${{ github.event.repository.name }}.xpi"
 
       - name: Testing Results
-        run: ls -l
+        run: echo ${{ steps.web-ext-build.outputs.target }}
 
 
 
