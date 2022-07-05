@@ -40,7 +40,7 @@ jobs:
           draft: true
           body_path: ${{ github.workspace }}-CHANGELOG.txt
           files: |
-          ${{ steps.web-ext-build.outputs.target }}
-          ${{ steps.zip-source.outputs.target }}
+            ${{ steps.web-ext-build.outputs.target }}
+            ${{ steps.zip-source.outputs.target }}
 
 
