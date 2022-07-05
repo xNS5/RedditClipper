@@ -37,7 +37,6 @@ jobs:
           draft: true
           artifacts: "${{ steps.web-ext-build.outputs.target }}, ${{ steps.zip-source.outputs.target }}"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
-          tag: "v1.0.3"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
 
 
