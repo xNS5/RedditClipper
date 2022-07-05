@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Generate Changelog
-        run: echo "# Good things have arrived" > ${{ github.workspace }}-CHANGELOG.txt"
+        run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.txt
 
       - name: "web-ext build"
         id: web-ext-build
@@ -23,6 +23,14 @@ jobs:
           source: ./
           filename: "${{ github.event.repository.name }}.xpi"
 
+      - name: Add Source To Release
+        id: zipped-source
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: 'source-code.zip'
+          exlcusions: '*.git* *.zip *.xpi'
+
 
       - name: "Create Release"
         uses: softprops/action-gh-release@v1
@@ -31,6 +39,8 @@ jobs:
         with:
           draft: true
           body_path: ${{ github.workspace }}-CHANGELOG.txt
-          files: ${{ steps.web-ext-build.outputs.target }}
+          files: |
+          ${{ steps.web-ext-build.outputs.target }}
+          ${{ steps.zip-source.outputs.target }}
 
 
