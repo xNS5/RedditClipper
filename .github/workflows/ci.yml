@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   build-and-publish:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Rename Extension
         id: rename-web-ext
-        run: mv ${{ steps.web-ext-build.outputs.target }} ./${{ github.event.repository.name }}-${{ github.ref_name }}.xpi
+        run: echo ${{ github.ref }}
 
 
 
