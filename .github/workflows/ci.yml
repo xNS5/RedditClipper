@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: "Checkout"
+      - name: Checkout
         uses: actions/checkout@v1
 
       - name: Generate Changelog
@@ -22,30 +22,23 @@ jobs:
         id: zipped-source
         run: zip -r source-code.zip . -x "\.*" "*.zip" "*.xpi" "*CHANGELOG.md" "web-ext-artifacts/"
 
-      - name: "web-ext build"
+      - name: web-ext build
         id: web-ext-build
         uses: kewisch/action-web-ext@v1
         with:
           cmd: build
           source: ./
-          filename: "${{ github.event.repository.name }}.xpi"
 
-      - name: "web-ext sign"
-        id: web-ext-sign
-        uses: kewisch/action-web-ext@v1
-        with:
-          cmd: sign
-          source: ${{ steps.web-ext-build.outputs.target }}
-          channel: unlisted
-          apiKey: ${{ secrets.JWT_ISSUER }}
-          apiSecret: ${{ secrets.JWT_SECRET }}
+      - name: Rename Extension
+        id: rename-web-ext
+        run: mv ${{ steps.web-ext-build.outputs.target }} ./${{ github.event.repository.name }}-${{ env.RELEASE_VERSION }}.xpi
 
-      - name: "Create Release"
+      - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           draft: true
-          tag: $RELEASE_VERSION
-          artifacts: "${{ steps.web-ext-sign.outputs.target }}, source-code.zip"
+          tag: "${{ env.RELEASE_VERSION }}"
+          artifacts: "${{ steps.rename-web-ext.outputs.target }}, source-code.zip"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
 
