@@ -45,7 +45,7 @@ jobs:
         with:
           draft: true
           tag: $RELEASE_VERSION
-          artifacts: "${{ steps.web-ext-build.outputs.target }}, source-code.zip"
+          artifacts: "${{ steps.web-ext-sign.outputs.target }}, source-code.zip"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
 
