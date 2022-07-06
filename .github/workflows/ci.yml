@@ -53,7 +53,7 @@ jobs:
         with:
           draft: true
           tag: ${{ needs.check_tag.outputs.tag_val }}
-          artifacts: "${{ steps.rename-web-ext.outputs.target }}"
+          artifacts: "${{ steps.rename-web-ext.outputs.fileName }}"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
 
