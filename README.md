@@ -42,7 +42,11 @@ This extension in no way communicates with me. All it does is reads the highligh
 
 # Installation
 
-I'm currently trying to work out the kinks on a Github Action script to automate releases to make it easier. Currently the action artifact isn't signed by Mozilla so the resulting XPI file won't be installable. 
+Please navigate to /releases and install the XPI file. Alternatively, you could download the source code and install locally. It's your life. 
+
+Inb4 "Why are there so many commits?":
+
+Mozilla is kind of a butt when it comes to signing releases. I have to keep incrementing the version number if I want to re-sign and test out the CI script. So it took a while. Lol.
 
 # Issues
 
