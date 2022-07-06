@@ -35,10 +35,6 @@ jobs:
       - name: Generate Changelog and Get Tag Version
         run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
 
-      - name: Add Source To Release
-        id: zipped-source
-        run: zip -r source-code.zip . -x "\.*" "*.zip" "*.xpi" "*CHANGELOG.md" "web-ext-artifacts/"
-
       - name: Web-ext Build
         id: web-ext-build
         uses: kewisch/action-web-ext@v1
@@ -46,12 +42,19 @@ jobs:
           cmd: build
           source: ./
 
+
+      - name: Rename Output
+        id: rename-web-ext
+        run: |
+          mv ${{ steps.web-ext-build.outputs.target }} ${{ github.event.repository.name }}-${{ env.RELEASE_VERSION }}.xpi
+          echo ::set-output name=fileName::${{ github.event.repository.name }}-${{ env.RELEASE_VERSION }}.xpi
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           draft: true
           tag: ${{ needs.check_tag.outputs.tag_val }}
-          artifacts: "${{ steps.web-ext-build.outputs.target }}, source-code.zip"
+          artifacts: "${{ steps.web-ext-sign.outputs.target }}"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
 
