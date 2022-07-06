@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Generate Changelog and Get Tag Version
+      - name: Generate Changelog
         run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
 
       - name: Web-ext Build
