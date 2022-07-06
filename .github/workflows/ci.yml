@@ -42,7 +42,6 @@ jobs:
           cmd: build
           source: ./
 
-
       - name: Rename Output
         id: rename-web-ext
         run: |
@@ -54,7 +53,7 @@ jobs:
         with:
           draft: true
           tag: ${{ needs.check_tag.outputs.tag_val }}
-          artifacts: "${{ steps.web-ext-sign.outputs.target }}"
+          artifacts: "${{ steps.web-ext-build.outputs.target }}"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
 
