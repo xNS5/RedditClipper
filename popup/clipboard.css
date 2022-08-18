@@ -3,28 +3,160 @@
     src: url(/assets/fonts/SFUIText/SFUIText-Regular.otf);
 }
 
+/* General Components */
 
 html, body{
     font-family: "San Francisco", Arial, serif;
     color: rgba(64,65,73,0.64);
+    overflow: visible;
 }
 
 .outer-wrapper {
     border-radius: 10px;
-    border-width: 5px;
-    margin: 20px 20px 20px 20px;
+    margin: 1em 0 1em 0;
+    padding: 1em 0 1em 1em;
+    border-style: solid;
+    border-width: 2px;
+    background-color: #d8dee9;
 }
 
 .inner-wrapper {
-    display: flex;
+    height: auto;
+    width: 25em;
+    margin: 1em 0 1em 0;
 }
 
 .text-area {
-    height: 25em;
-    border-style: solid;
+    margin: 2px;
+    color: black;
+    padding: 10px;
     border-radius: 4px;
-    width: 25em;
-    margin: 10px 0;
+    font-family: "San Francisco", serif;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #2e3440;
+    background-color: #eceff4;
+    font-size: 18px;
 }
 
+button{
+    border-radius: 4px;
+    height: 32px;
+    padding: 0 .5em 0 .5em;
+    font-size: 15px;
+    background-color: #0060df;
+    color: white;
+    border-color: transparent;
+}
+
+.major{
+    min-width: 135px;
+    width: auto;
+}
+
+#text-formatting-pane{
+    margin: 5px;
+    padding: 10px;
+    width: 50%;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #2e3440;
+    background-color: #eceff4;
+    color: black;
+    font-family: "San Francisco", serif;
+}
+
+#pane-bold:before{
+    -webkit-filter:invert(100%);
+    content:url("/assets/icons/bold.png");
+    float: left;
+}
+
+#pane-italics:before{
+    -webkit-filter:invert(100%);
+    content:url("/assets/icons/italics.png");
+    float: left;
+}
+
+#pane-strikethrough:before{
+    -webkit-filter:invert(100%);
+    content:url("/assets/icons/strikethrough.png");
+    float: left;
+}
+
+#pane-quote:before{
+    -webkit-filter:invert(100%);
+    content:url("/assets/icons/quote.png");
+    float: left;
+}
+
+#pane-link:before{
+    -webkit-filter:invert(100%);
+    content:url("/assets/icons/link.png");
+    float: left;
+}
+
+button:active{
+    -webkit-filter:invert(100%);
+    background-color: #002275;
+}
+
+/* Snackbar */
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #ededf0;
+    color: #0c0c0d;
+    text-align: center;
+    border-radius: 2px;
+    padding: 0.5em;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+}
+
+.notify-close{
+    background: url("/assets/icons/close.svg");
+    cursor:pointer;
+    border:none;
+    width:100px;
+    height:100px;
+}
+
+#snackbar::before{
+    content:url("/assets/icons/information.svg");
+    float: left;
+}
+
+#snackbar.show {
+    border-radius: 4px;
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Snackbar Animations */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
 

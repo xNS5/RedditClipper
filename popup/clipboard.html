@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="clipboard.css">
+    <script src="clipboard.js"></script>
 </head>
 <body>
     <div class="outer-wrapper">
         <div class="inner-wrapper">
-            <div class="text-area">Test</div>
+            <div id="text-formatting-pane">
+                <button id="pane-bold"></button>
+                <button id="pane-italics"></button>
+                <button id="pane-strikethrough"></button>
+                <button id="pane-quote"></button>
+                <button id="pane-link"></button>
+            </div>
+            <div id="text-area" class="text-area" contenteditable>Test</div>
         </div>
         <div class="button-ribbon">
-            <button id="clear">Clear</button>
+            <button id="clear" class="major" onclick="notifyUser('Cleared Clipboard')">Clear</button>
         </div>
     </div>
+    <div id="snackbar"></div>
 </body>
 </html>

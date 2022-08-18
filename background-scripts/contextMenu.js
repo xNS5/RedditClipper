@@ -1,3 +1,5 @@
+import {addToClipboard} from '/popup/clipboard.js';
+
 browser.contextMenus.create({
     id: "copy-text",
     title: "Copy",
@@ -19,9 +21,8 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 
     console.log(text);
 
-    navigator.clipboard.writeText(text).then(() => {
-        console.log(`Added "${text}" to clipboard`)
-
+    navigator.clipboard.writeText(text).then(async () => {
+        await addToClipboard(text)
     }, () => {
         alert("You haven't granted RedditClipper Clipboard or Tab permissions.")
     })
