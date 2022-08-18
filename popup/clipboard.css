@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'San Francisco';
+    src: url(/assets/fonts/SFUIText/SFUIText-Regular.otf);
+}
+
+
+html, body{
+    font-family: "San Francisco", Arial, serif;
+    color: rgba(64,65,73,0.64);
+}
+
+.outer-wrapper {
+    border-radius: 10px;
+    border-width: 5px;
+    margin: 20px 20px 20px 20px;
+}
+
+.inner-wrapper {
+    display: flex;
+}
+
+.text-area {
+    height: 25em;
+    border-style: solid;
+    border-radius: 4px;
+    width: 25em;
+    margin: 10px 0;
+}
+
+
