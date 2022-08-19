@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="clipboard.css">
-    <script src="clipboard.js"></script>
+    <link rel="stylesheet" href="/utils/snackbar/snackbar.css">
+    <script nonce="dfr0k6cH2eqpP4pT8aculA==" src="clipboard.js"></script>
+    <script nonce='dfr0k6cH2eqpP4pT8aculA==' src="/utils/snackbar/snackbar.js"></script>
 </head>
 <body>
     <div class="outer-wrapper">
         <div class="inner-wrapper">
-            <div id="text-formatting-pane">
-                <button id="pane-bold"></button>
-                <button id="pane-italics"></button>
-                <button id="pane-strikethrough"></button>
-                <button id="pane-quote"></button>
-                <button id="pane-link"></button>
+            <div id="text-wrapper">
+                <div id="text-formatting-pane">
+                    <button id="bold"><img class="inverted" src="/assets/icons/bold.png" title="bold"></button>
+                    <button id="ital"><img class="inverted" src="/assets/icons/italics.png" title="italics"></button>
+                    <button id="strike"><img class="inverted" src="/assets/icons/strikethrough.png" title="strikethrough"></button>
+                    <button id="quote"><img class="inverted" src="/assets/icons/quote.png" title="quote"></button>
+                    <button id="link"><img class="inverted" src="/assets/icons/link.png" title="link"></button>
+                    <button id="clear"><img class="inverted" src="/assets/icons/clear.png" title="clear"></button>
+                </div>
+                <div id="text-area" class="text-area" contenteditable>Test</div>
             </div>
-            <div id="text-area" class="text-area" contenteditable>Test</div>
-        </div>
-        <div class="button-ribbon">
-            <button id="clear" class="major" onclick="notifyUser('Cleared Clipboard')">Clear</button>
+            <div id="snackbar"></div>
         </div>
     </div>
-    <div id="snackbar"></div>
 </body>
 </html>
+
+
