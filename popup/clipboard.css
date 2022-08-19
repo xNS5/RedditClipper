@@ -27,6 +27,15 @@ body{
     margin: 0.5em 0 0.5em 0;
 }
 
+/* Header Container */
+.header-container{
+    display: inline;
+}
+
+.header-container > * {
+    margin: 5px;
+}
+
 /* Text Formatting/Box */
 
 #text-wrapper{

@@ -8,10 +8,18 @@ const actionObj = {
 }
 
 let formatPane = undefined;
+let manifest = undefined;
 document.addEventListener('DOMContentLoaded', e =>{
     if(formatPane === undefined){
         formatPane = document.getElementById('text-formatting-pane');
     }
+
+    if(manifest === undefined){
+        manifest = browser.runtime.getManifest();
+        document.getElementById('title').innerHTML= `<a href=${manifest.homepage_url}>${manifest.name}</a>`;
+        document.getElementById('version').textContent = `v${manifest.version}`;
+    }
+
     formatPane?.addEventListener('mousedown', e => {
         var action = actionObj[e.target?.id]
         clipboardController(action >= 0 ? action : -1);

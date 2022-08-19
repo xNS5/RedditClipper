@@ -3,6 +3,7 @@
   "name": "RedditClipper",
   "version": "1.0.6",
   "description": "Copies text to the system clipboard in markdown format.",
+  "homepage_url": "https://www.github.com/xns5/redditclipper",
   "icons": {
     "32": "assets/icons/reddit-32.png",
     "64": "assets/icons/reddit-64.png",
