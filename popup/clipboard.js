@@ -40,7 +40,7 @@ document.addEventListener('keydown', e => {
 function clipboardController(action){
     switch(action){
         case 0:
-            console.log("bold");
+            bold();
             break;
         case 1:
             console.log("italics");
@@ -62,7 +62,9 @@ function clipboardController(action){
 
 function addToClipboard(text){}
 
-function bold(){}
+function bold(){
+    console.log(window.getSelection()?.toString());
+}
 
 function italics(){}
 
