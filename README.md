@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# RedditClipper
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a small firefox browser extension which formats highlighted text to Reddit style markdown quotes along with the URL source.
 
-## Available Scripts
+I like many others enjoy arguing with strangers online. Often times I find myself jumping between two or more tabs/pages
+to learn, quote, and cite information. I would copy text from the article I was reading, paste it into a reddit comment
+box, format it accordingly to make it a quote, jump back to the webpage to copy the web address and format that as a markdown hyperlink. 
 
-In the project directory, you can run:
+This process annoyed me so much that I wanted to find a way to autoamte it. 
 
-### `npm start`
+There are two scenarios I wanted to account for: the first being if someone has highlighted text, and the second is if someone
+wants to just copy the URL. When the extension is run, it looks for highlighted text. If there is highlighted text, it formats 
+it accordingly and adds the URL as a hyperlink underneath the quoted text.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## If text is highlighted
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A iaculis at erat pellentesque adipiscing commodo. Sed libero enim sed faucibus turpis. Ultrices mi tempus imperdiet nulla malesuada pellentesque. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin. Sapien eget mi proin sed libero enim sed. Duis ultricies lacus sed turpis tincidunt. Lacus sed turpis tincidunt id. Sed blandit libero volutpat sed cras. Accumsan tortor posuere ac ut consequat semper viverra. Sem et tortor consequat id porta nibh venenatis cras.
 
-### `npm test`
+Curabitur vitae nunc sed velit dignissim sodales ut. Et malesuada fames ac turpis egestas sed tempus urna et. Malesuada proin libero nunc consequat interdum varius sit. Diam phasellus vestibulum lorem sed. Pharetra vel turpis nunc eget. Leo duis ut diam quam nulla. Dictum sit amet justo donec. Habitant morbi tristique senectus et netus et malesuada fames. Nunc lobortis mattis aliquam faucibus. Congue mauris rhoncus aenean vel elit scelerisque mauris. Montes nascetur ridiculus mus mauris vitae ultricies. Mi quis hendrerit dolor magna eget est. Tincidunt praesent semper feugiat nibh sed. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Nibh sit amet commodo nulla facilisi nullam vehicula ipsum a. Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis. In iaculis nunc sed augue lacus viverra vitae congue eu. At volutpat diam ut venenatis tellus in. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Vitae suscipit tellus mauris a diam maecenas sed enim ut.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The re-formatted text copied to the clipboard:
 
-### `npm run build`
+\> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. A iaculis at erat pellentesque adipiscing commodo. Sed libero enim sed faucibus turpis. Ultrices mi tempus imperdiet nulla malesuada pellentesque. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin. Sapien eget mi proin sed libero enim sed. Duis ultricies lacus sed turpis tincidunt. Lacus sed turpis tincidunt id. Sed blandit libero volutpat sed cras. Accumsan tortor posuere ac ut consequat semper viverra. Sem et tortor consequat id porta nibh venenatis cras.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+\> Curabitur vitae nunc sed velit dignissim sodales ut. Et malesuada fames ac turpis egestas sed tempus urna et. Malesuada proin libero nunc consequat interdum varius sit. Diam phasellus vestibulum lorem sed. Pharetra vel turpis nunc eget. Leo duis ut diam quam nulla. Dictum sit amet justo donec. Habitant morbi tristique senectus et netus et malesuada fames. Nunc lobortis mattis aliquam faucibus. Congue mauris rhoncus aenean vel elit scelerisque mauris. Montes nascetur ridiculus mus mauris vitae ultricies. Mi quis hendrerit dolor magna eget est. Tincidunt praesent semper feugiat nibh sed. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Nibh sit amet commodo nulla facilisi nullam vehicula ipsum a. Fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis. In iaculis nunc sed augue lacus viverra vitae congue eu. At volutpat diam ut venenatis tellus in. Tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Vitae suscipit tellus mauris a diam maecenas sed enim ut.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+\[Source](https://www.foo.bar)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## If no text is highlighted
 
-### `npm run eject`
+The URL:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+https://www.foo.bar
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The re-formatted URl copied to the clipboard:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+\[foo](https://www.foo.bar)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Data Stored
 
-## Learn More
+This extension in no way communicates with me. All it does is reads the highlighted text is present -> formats it -> sends it to your system clipboard. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Please navigate to /releases and install the XPI file. Alternatively, you could download the source code and install locally. It's your life. 
 
-### Code Splitting
+Inb4 "Why are there so many commits?":
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Mozilla is kind of a butt when it comes to signing releases. I have to keep incrementing the version number if I want to re-sign and test out the CI script. So it took a while. Lol.
 
-### Analyzing the Bundle Size
+# Issues
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If there are any issues or bugs with this extension, please create a new issue and describe in detail what's going on. I 
+won't be able to help or fix it if I don't know what's going wrong.
