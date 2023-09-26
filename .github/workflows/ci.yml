@@ -16,7 +16,7 @@ jobs:
         run: |
           manifestContent=$(cat ./manifest.json)
           version=${{fromJson($manifestContent).version}}
-          echo version
+          echo $version
           
 
   build-and-publish:
