@@ -15,7 +15,7 @@ jobs:
         id: load-json
         run: |
           manifestVersion=$(cat ./manifest.json | jq -r '.version' )
-          if[[ $(git tag -l "$manifestVersion" | wc -c ) > 0 ]] then
+          if(( $(git tag -l "$manifestVersion" | wc -c ) > 0 )); then
             echo "Match!"
           else
             echo "No Match!"
