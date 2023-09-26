@@ -9,11 +9,14 @@ jobs:
       run_other_jobs: ${{ steps.check-tag.outputs.run_jobs }}
       tag_val: ${{ steps.check-tag.outputs.tag }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
       - name: Check Tag ${{ github.ref }}
         id: check-tag
         run: |
           manifestContent=$(cat ./manifest.json)
           echo $manifestContent
+          pwd
 
   build-and-publish:
     needs: [check_tag]
