@@ -12,10 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Check Tag ${{ github.ref }}
-        id: check-tag
+        id: load-json
+        run: |
+          echo 'MANIFEST_JSON=$(cat ./manifest.json)' >> $GITHUB_ENV
+      - name: Check Tag ${{ github.ref }}
+        id: parse-json
         run: |
           manifestContent=$(cat ./manifest.json)
-          version=${{fromJson($manifestContent).version}}
+          version=${{fromJson(env.MANIFEST_JSON).version}}
           echo $version
           
 
