@@ -15,8 +15,9 @@ jobs:
         id: check-tag
         run: |
           manifestContent=$(cat ./manifest.json)
-          echo $manifestContent
-          pwd
+          manifestJson=${{fromJson($manifestContent)}}
+          echo $manifestJson.version
+          
 
   build-and-publish:
     needs: [check_tag]
