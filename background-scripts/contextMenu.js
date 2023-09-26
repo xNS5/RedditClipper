@@ -11,13 +11,10 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
     if(curr_info.selectionText){
         var filtered_arr = curr_info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
         filtered_arr.forEach((string) => {
-            text += (`> ${string}\n\n\n`);
+            text += (`> ${string}\n\n`);
         })
     }
 
     text += `[${text.length > 0 ? "Source" : curr_tab.title}](${curr_tab.url})`;
-
-    navigator.clipboard.writeText(text).then(() => {
-        console.log(`Added "${text}" to clipboard`)
-    })
+    navigator.clipboard.writeText(text);
 });
