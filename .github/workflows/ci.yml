@@ -18,8 +18,7 @@ jobs:
       - name: Check Tag ${{ github.ref }}
         id: parse-json
         run: |
-          manifestContent=$(cat ./manifest.json)
-          version=${{fromJson(env.MANIFEST_JSON).version}}
+          version=${{fromJson(env.MANIFEST_JSON)}}
           echo $version
           
 
