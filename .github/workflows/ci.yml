@@ -16,10 +16,10 @@ jobs:
         run: |
           manifestVersion=$(cat ./manifest.json | jq '.version')
           lastVersion=$(git tag -l --sort=-version:refname | head -1)
-          if[ "$manifestVersion" == "$lastVersion" ] then
-            echo "No match!"
-          else
+          if[ $(git tag -l "$manifestVersion") ] then
             echo "Match!"
+          else
+            echo "No Match!"
           fi
           
 
