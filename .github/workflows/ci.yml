@@ -14,8 +14,14 @@ jobs:
       - name: Check Tag ${{ github.ref }}
         id: load-json
         run: |
-          version=$(cat ./manifest.json | jq '.version')
-          echo $version
+          manifestVersion=$(cat ./manifest.json | jq '.version')
+          lastVersion=$(git tag -l --sort=-version:refname | head -1)
+          echo $manifestVersion $lastVersion
+          if[[ $manifestVersion != $lastVersion ]] then
+            echo "No match!"
+          else
+            echo "Match!"
+          fi
           
 
   build-and-publish:
