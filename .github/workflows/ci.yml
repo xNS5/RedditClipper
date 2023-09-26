@@ -14,11 +14,7 @@ jobs:
       - name: Check Tag ${{ github.ref }}
         id: load-json
         run: |
-          echo 'MANIFEST_JSON=$(cat ./manifest.json)' >> $GITHUB_ENV
-      - name: Check Tag ${{ github.ref }}
-        id: parse-json
-        run: |
-          version=${{fromJson(env.MANIFEST_JSON)}}
+          version=$(cat ./manifest.json | jq '.version')
           echo $version
           
 
