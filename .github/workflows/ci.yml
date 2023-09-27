@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Check Tag ${{ github.ref }}
-        id: load-json
+        id: load_json
         run: |
           manifestVersion=$(cat ./manifest.json | jq -r '.version' )
           echo "VERSION: $manifestVersion"
@@ -24,8 +24,8 @@ jobs:
           fi
 
   build-and-publish:
-    needs: [check_tag]
-    if: needs.check_tag.outputs.RUN == 'true'
+    needs: [load_json]
+    if: needs.load_json.outputs.RUN == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -37,7 +37,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const {TAG} = ${{ steps.load-json.output.TAG }}       
+            const {TAG} = ${{ steps.load_json.output.TAG }}       
             github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
