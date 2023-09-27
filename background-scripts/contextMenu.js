@@ -14,7 +14,6 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
             text += (`> ${string}\n\n`);
         })
     }
-
     text += `[${text.length > 0 ? "Source" : curr_tab.title}](${curr_tab.url})`;
     navigator.clipboard.writeText(text);
 });
