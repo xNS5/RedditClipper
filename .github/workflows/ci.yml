@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       RUN: ${{ steps.load-json.outputs.RUN }}
+      TAG: ${{ steps.load-json.outputs.TAG }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -17,10 +18,7 @@ jobs:
           echo "VERSION: $manifestVersion"
           if(( $(git tag -l "$manifestVersion" | wc -c ) == 0 )); then
             echo "RUN=true" >> "$GITHUB_OUTPUT"
-            git config --local user.email "actions@github.com"
-            git config --local user.name actions-user
-            git tag -a $manifestVersion -m "Automated creation"
-            git push origin $manifestVersion           
+            echo "TAG=$manifestVersion" >> "$GITHUB_OUTPUT"         
           fi
 
   build-and-publish:
@@ -63,7 +61,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           draft: true
-          tag: ${{ needs.check_tag.outputs.TAG }}
+          tag: ${{ needs.load-json.outputs.TAG }}
           artifacts: "${{ github.event.repository.name }}.xpi"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
