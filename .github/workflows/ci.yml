@@ -35,13 +35,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const TAG = ${{ needs.load-json.outputs.TAG }};
+            const TAG = ${{ needs.load-json.outputs.TAG }}
             github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: `refs/tags/${TAG}`,
                 sha: context.sha
-            });
+            })
 
       - name: Generate Changelog
         run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
