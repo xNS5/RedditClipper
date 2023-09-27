@@ -1,39 +1,49 @@
 name: Publish Signed Firefox Extension
 
-on:
-  push:
-    branches:
-      - 'main'
-  create:
-    tags:
-      - 'v[0-9]+\.[0-9]+\.[0-9]+'
+on: [push]
 
 jobs:
   check_tag:
     runs-on: ubuntu-latest
     outputs:
-      run_other_jobs: ${{ steps.check-tag.outputs.run_jobs }}
-      tag_val: ${{ steps.check-tag.outputs.tag }}
+      RUN: ${{ steps.check-tag.outputs.RUN }}
+      TAG: ${{ steps.check-tag.outputs.TAG }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
       - name: Check Tag ${{ github.ref }}
-        id: check-tag
+        id: load-json
         run: |
-          if [[ ${{ github.ref }} =~ refs\/tags\/v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-            echo ::set-output name=run_jobs::true
-            echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
-          else
-            echo ::set-output name=run_jobs::false
+          manifestVersion=$(cat ./manifest.json | jq -r '.version' )
+          echo "VERSION: $manifestVersion"
+          run_jobs=false
+          if(( $(git tag -l "$manifestVersion" | wc -c ) == 0 )); then
+            run_jobs=true
+            echo "TAG=$manifestVersion" >> $GITHUB_OUTPUT
+            echo "RUN=$run_jobs" >> $GITHUB_OUTPUT
           fi
 
   build-and-publish:
     needs: [check_tag]
-    if: needs.check_tag.outputs.run_other_jobs == 'true'
+    if: needs.check_tag.outputs.RUN == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
+      - name: Create Tag
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const {TAG} = ${{ steps.load-json.output.TAG }}       
+            github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/tags/${TAG}`,
+                sha: context.sha
+            })
 
       - name: Generate Changelog
         run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
@@ -65,7 +75,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           draft: true
-          tag: ${{ needs.check_tag.outputs.tag_val }}
+          tag: ${{ needs.check_tag.outputs.TAG }}
           artifacts: "${{ github.event.repository.name }}.xpi"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
