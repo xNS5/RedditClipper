@@ -31,11 +31,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Get Tag
+        run: |
+          echo "TAG=${{ needs.load-json.outputs.TAG }}" >> "$GITHUB_ENV"
+
       - name: Create Tag
         uses: actions/github-script@v5
         with:
           script: |
-            const TAG = ${{ needs.load-json.outputs.TAG }}
+            const TAG = ${{ env.TAG }}
             github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
