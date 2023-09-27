@@ -3,11 +3,11 @@ name: Publish Signed Firefox Extension
 on: [push]
 
 jobs:
-  check_tag:
+  load-json:
     runs-on: ubuntu-latest
     outputs:
-      RUN: ${{ steps.check-tag.outputs.RUN }}
-      TAG: ${{ steps.check-tag.outputs.TAG }}
+      RUN: ${{ steps.load-json.outputs.RUN }}
+      TAG: ${{ steps.load-json.outputs.TAG }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -24,7 +24,7 @@ jobs:
           fi
 
   build-and-publish:
-    needs: [load_json]
+    needs: [load-json]
     if: needs.load_json.outputs.RUN == 'true'
     runs-on: ubuntu-latest
     permissions:
@@ -37,7 +37,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const {TAG} = ${{ steps.load_json.output.TAG }}       
+            const {TAG} = ${{ steps.load-json.output.TAG }}       
             github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
