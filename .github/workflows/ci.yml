@@ -61,13 +61,10 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           draft: true
-          tag: ${{ needs.load-json.outputs.TAG }}
+          tag: "refs/tags/${{ needs.load-json.outputs.TAG }}"
           artifacts: "${{ github.event.repository.name }}.xpi"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
           token: ${{ secrets.FF_RELEASE_TOKEN }}
-
-
-
 
 
 
