@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       RUN: ${{ steps.load-json.outputs.RUN }}
-      TAG: ${{ steps.load-json.outputs.TAG }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -17,8 +16,10 @@ jobs:
           manifestVersion=$(cat ./manifest.json | jq -r '.version' )
           echo "VERSION: $manifestVersion"
           if(( $(git tag -l "$manifestVersion" | wc -c ) == 0 )); then
-            echo "TAG=$manifestVersion" >> "$GITHUB_OUTPUT"
             echo "RUN=true" >> "$GITHUB_OUTPUT"
+            git config --local user.email "actions@github.com"
+            git config --local user.name actions-user
+            git push origin "$manifestVersion"            
           fi
 
   build-and-publish:
@@ -30,22 +31,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-
-      - name: Get Tag
-        run: |
-          echo "TAG=${{ needs.load-json.outputs.TAG }}" >> "$GITHUB_ENV"
-
-      - name: Create Tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            const TAG = ${{ env.TAG }}
-            github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: `refs/tags/${TAG}`,
-                sha: context.sha
-            })
 
       - name: Generate Changelog
         run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
