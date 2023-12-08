@@ -27,7 +27,7 @@ jobs:
 
   build-and-publish:
     needs: [load-json]
-    if: ${{ needs.load-json.outputs.RUN }} == "true"
+    if: ${{ needs.load-json.outputs.RUN == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
