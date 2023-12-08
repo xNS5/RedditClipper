@@ -32,46 +32,43 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Access Variable
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Generate Changelog
+        run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
+
+      - name: Web-ext Build
+        id: web-ext-build
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: build
+          source: ./
+
+      - name: Web-ext Sign
+        id: web-ext-sign
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: sign
+          source: ${{ steps.web-ext-build.outputs.target }}
+          channel: unlisted
+          apiKey: ${{ secrets.JWT_ISSUER }}
+          apiSecret: ${{ secrets.JWT_SECRET }}
+          timeout: 900000
+
+      - name: Rename Output
+        id: rename-web-ext
         run: |
-          echo "${{ needs.load-json.outputs.RUN }}"
-#      - name: Checkout
-#        uses: actions/checkout@v1
-#
-#      - name: Generate Changelog
-#        run: echo "# Changelog " > ${{ github.workspace }}-CHANGELOG.md
-#
-#      - name: Web-ext Build
-#        id: web-ext-build
-#        uses: kewisch/action-web-ext@v1
-#        with:
-#          cmd: build
-#          source: ./
-#
-#      - name: Web-ext Sign
-#        id: web-ext-sign
-#        uses: kewisch/action-web-ext@v1
-#        with:
-#          cmd: sign
-#          source: ${{ steps.web-ext-build.outputs.target }}
-#          channel: unlisted
-#          apiKey: ${{ secrets.JWT_ISSUER }}
-#          apiSecret: ${{ secrets.JWT_SECRET }}
-#          timeout: 900000
-#
-#      - name: Rename Output
-#        id: rename-web-ext
-#        run: |
-#          mv ${{ steps.web-ext-sign.outputs.target }} ${{ github.event.repository.name }}.xpi
-#
-#      - name: Create Release
-#        uses: ncipollo/release-action@v1
-#        with:
-#          draft: true
-#          tag: "refs/tags/${{ needs.load-json.outputs.TAG }}"
-#          artifacts: "${{ github.event.repository.name }}.xpi"
-#          bodyFile: "${{ github.workspace }}-CHANGELOG.md"
-#          token: ${{ secrets.FF_RELEASE_TOKEN }}
+          mv ${{ steps.web-ext-sign.outputs.target }} ${{ github.event.repository.name }}.xpi
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          draft: true
+          tag: "refs/tags/${{ needs.load-json.outputs.TAG }}"
+          artifacts: "${{ github.event.repository.name }}.xpi"
+          bodyFile: "${{ github.workspace }}-CHANGELOG.md"
+          token: ${{ secrets.FF_RELEASE_TOKEN }}
 
 
 
