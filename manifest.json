@@ -1,33 +1,32 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "RedditClipper",
-  "version": "1.0.7",
-
+  "version": "1.0.6",
   "description": "Copies text to the system clipboard in Reddit markdown format.",
   "icons": {
     "32": "icons/reddit-32.png",
     "64": "icons/reddit-64.png",
     "128": "icons/reddit-128.png"
   },
-
   "browser_action": {
     "default_icon": "icons/reddit-32.png",
     "default_title": "Clipper"
   },
-
   "background": {
-    "scripts": [
-      "background-scripts/contextMenu.js"
-    ]
+    "scripts": ["background-scripts/contextMenu.js"]
   },
-
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["content-scripts/content.js"]
+    }
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "RedditClipper@goingcrazy.com",
       "strict_min_version": "55.0"
     }
   },
-
   "permissions": [
     "tabs",
     "contextMenus",
