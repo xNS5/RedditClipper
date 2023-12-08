@@ -26,7 +26,7 @@ jobs:
           fi
 
   build-and-publish:
-#    needs: [load-json]
+    needs: [load-json]
 #    if: ${{ needs.load-json.outputs.RUN }} == "true"
     runs-on: ubuntu-latest
     permissions:
