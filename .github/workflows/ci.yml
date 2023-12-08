@@ -6,8 +6,8 @@ jobs:
   load-json:
     runs-on: ubuntu-latest
     outputs:
-      RUN: ${{ steps.load-json.outputs.RUN }}
-      TAG: ${{ steps.load-json.outputs.TAG }}
+      RUN: ${{ steps.load_json.outputs.RUN }}
+      TAG: ${{ steps.load_json.outputs.TAG }}
     steps:
       - name: Checkout
         uses: actions/checkout@v1
