@@ -17,8 +17,12 @@ jobs:
           manifestVersion=$(cat ./manifest.json | jq -r '.version' )
           echo "VERSION: $manifestVersion"
           if(( $(git tag -l "$manifestVersion" | wc -c ) == 0 )); then
+            echo "NEW VERSION"
             echo "RUN=true" >> "$GITHUB_OUTPUT"
-            echo "TAG=$manifestVersion" >> "$GITHUB_OUTPUT"         
+            echo "TAG=$manifestVersion" >> "$GITHUB_OUTPUT"
+          else
+            echo "VERSION ALREADY EXISTS"
+            echo "RUN=false" >> "$GITHUB_OUTPUT"
           fi
 
   build-and-publish:
