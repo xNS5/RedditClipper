@@ -1,5 +1,5 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "RedditClipper",
   "version": "1.0.6",
   "description": "Copies text to the system clipboard in Reddit markdown format.",
@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["https://*/*"],
-      "js": ["content-scripts/content.js"]
+      "js": ["content-scripts/contentScript.js"]
     }
   ],
   "browser_specific_settings": {
