@@ -85,7 +85,7 @@ Inb4 "Why are there so many commits?":
 
 Mozilla is kind of a butt when it comes to signing releases. I have to keep incrementing the version number if I want to re-sign and test out the CI script. So it took a while. Lol.
 
-# Issues
+# Contributing
 
-If there are any issues or bugs with this extension, please create a new issue and describe in detail what's going on. I 
+If there are any issues or bugs with this extension, please create a new issue and describe in detail what's going on or the desired functionality. I 
 won't be able to help or fix it if I don't know what's going wrong.
