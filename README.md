@@ -72,7 +72,10 @@ ___
 
 # Data Stored
 
-This extension in no way communicates with me. All it does is reads the highlighted text is present -> formats it -> sends it to your system clipboard. 
+This web extension utilizes the browser's `sessionStorage` to persist data. `sessionStorage`, unlike `localStorage`, persists data only
+while the browser session is running. Once you close the browser, the data goes away. This call can be seen [here in contextMenu.js](https://github.com/xNS5/RedditClipper/blob/a0954081d0a52ee501b894ab31e73ed5be52b291/background-scripts/contextMenu.js#L53). 
+
+No data is transmitted to servers associated with this project. 
 
 # Installation
 
