@@ -1,3 +1,24 @@
+browser.contextMenus.create({
+    id: "copy-text",
+    title: "Copy",
+    contexts: ["all"],
+    icons: {
+        "16": "icons/copy-32.png",
+        "32": "icons/copy-32.png",
+    }
+});
+
+browser.contextMenus.create({
+    id: "paste-link",
+    title: "Paste Link",
+    contexts: ["all"],
+    icons: {
+        "16": "icons/link-16.png",
+        "32": "icons/link-32.png",
+    }
+})
+
+
 function doCopy(text){
     navigator.clipboard.writeText(text);
 }
@@ -6,31 +27,9 @@ function doStore(key, value){
     sessionStorage.setItem(key, value);
 }
 
-function getFromStore(key){
+function getFromStore(key) {
     return sessionStorage.getItem(key);
 }
-
-browser.runtime.onInstalled.addListener(() => {
-    browser.contextMenus.create({
-        id: "copy-text",
-        title: "Copy",
-        contexts: ["all"],
-        icons: {
-            "16": "icons/copy-32.png",
-            "32": "icons/copy-32.png",
-        }
-    });
-
-    browser.contextMenus.create({
-        id: "paste-link",
-        title: "Paste Link",
-        contexts: ["all"],
-        icons: {
-            "16": "icons/link-16.png",
-            "32": "icons/link-32.png",
-        }
-    })
-})
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
     try{
