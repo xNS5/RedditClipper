@@ -1,20 +1,78 @@
-
+"use strict"
 
 browser.contextMenus.create({
     id: "copy-text",
-    title: "Copy",
-    contexts: ["all"]
+    title: "Copy Text",
+    contexts: ["all"],
+    icons: {
+        "16": "icons/copy-16.png",
+        "32": "icons/copy-32.png",
+    }
 });
 
+browser.contextMenus.create({
+    id: "copy-link",
+    title: "Copy Link", 
+    contexts: ["all"],
+    icons: {
+        "16": "icons/link-16.png",
+        "32": "icons/link-32.png",
+    }
+});
+
+browser.contextMenus.create({
+    id: "paste-link",
+    title: "Paste Link", 
+    contexts: ["all"],
+    icons: {
+        "16": "icons/paste-16.png",
+        "32": "icons/paste-32.png",
+    }
+});
+
+
+function doCopy(text){
+    navigator.clipboard.writeText(text);
+}
+
+function doStore(key, value){
+    sessionStorage.setItem(key, value);
+}
+
+function getFromStore(key) {
+    return sessionStorage.getItem(key);
+}
+
 browser.contextMenus.onClicked.addListener((info, tab) => {
-    var text = "";
-    var curr_tab = {...tab};
-    var curr_info = {...info};
-    if(curr_info.selectionText){
-        var filtered_arr = curr_info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
-        filtered_arr.forEach((string) => {
-            text += (`> ${string}\n`);
-        })
+    try{
+        switch(info.menuItemId){
+            case "copy-text":
+                let text = "";
+                if(info.selectionText){
+                    let filtered_arr = info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
+                    filtered_arr.forEach((string) => {
+                        text += (`> ${string}\n\n`);
+                    })
+                }
+                text += `[${text.length > 0 ? "Source" : tab.title}](${tab.url})`;
+                doCopy(text);
+                doStore("rc_stored_tab", JSON.stringify(tab))
+                break;
+            case "copy-link":
+                doCopy(`[${tab.title}](${tab.url})`)
+                doStore("rc_stored_tab", JSON.stringify(tab))
+                break;
+            case "paste-link":
+                let storeTab = JSON.parse(getFromStore("rc_stored_tab"));
+                console.log(storeTab);
+                browser.tabs.sendMessage(tab.id, { action: "paste-link", storeTab: storeTab, highlightedText: info.selectionText})
+                    .catch(error => {
+                        console.error("Reddit Clipper Error: ", error);
+                    });
+                break;
+        }
+    } catch(e){
+        console.error("Reddit Clipper", e);
     }
 
     text += `[${text.length > 0 ? "Source" : `\n${curr_tab.title}`}](${curr_tab.url})`;

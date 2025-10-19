@@ -1,9 +1,8 @@
 {
   "manifest_version": 2,
   "name": "RedditClipper",
-  "version": "1.0.6",
-  "description": "Copies text to the system clipboard in markdown format.",
-  "homepage_url": "https://www.github.com/xns5/redditclipper",
+  "version": "1.1.2",
+  "description": "Copies text to the system clipboard in Reddit markdown format.",
   "icons": {
     "32": "assets/icons/reddit-32.png",
     "64": "assets/icons/reddit-64.png",
