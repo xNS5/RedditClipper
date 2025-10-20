@@ -1,5 +1,3 @@
-"use strict"
-
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     try{
         switch(message.action){
@@ -15,23 +13,23 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     isRedesign = true;
                 }
 
-                 if(isRedesign){
-                    if(highlightedText?.length > 0){
-                        document.execCommand('insertText', false, `[${highlightedText}](${url})`);
+                const insertText = (text) => {
+                    if(isRedesign){
+                        document.execCommand('insertText', false, text);
                     } else {
-                        document.execCommand('insertText', false, `[${storeTab.title}](${url})`);
-                    }
-                 } else {
-                    if(highlightedText?.length > 0){
-                        activeElement.value = activeElement.value.replace(`${highlightedText}`, `[${highlightedText}](${url})`);
-                    } else {
-                        activeElement.value = activeElement.value.length > 0 ? (activeElement.value + ` [${storeTab.title}](${url})`) : `[${storeTab.title}](${url})`;
+                        const activeText = activeElement.value;
+                        activeElement.value = activeText.includes(highlightedText) 
+                                ? activeText.replace(highlightedText, text) 
+                                : (activeText.length > 0 ? activeText + ' ' + text : text);
                     }
                 }
 
+                const urlText = `[${highlightedText?.length > 0 ? highlightedText : storeTab.title}](${url})`;
+                insertText(urlText);
+
+                break;
         }
     } catch(e){
         console.error("RedditClipper error: ", e);
     }
 });
-

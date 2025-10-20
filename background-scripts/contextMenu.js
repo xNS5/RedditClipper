@@ -1,5 +1,3 @@
-"use strict"
-
 browser.contextMenus.create({
     id: "copy-text",
     title: "Copy Text",
@@ -54,7 +52,16 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
                         text += (`> ${string}\n\n`);
                     })
                 }
-                text += `[${text.length > 0 ? "Source" : tab.title}](${tab.url})`;
+
+                text += `[${text.length > 0 ? "Source" : `\n${tab.title}`}](${tab.url})`;
+
+                console.log(text);
+            
+                navigator.clipboard.writeText(text).then(async () => {
+                    console.log(`Added ${text}`)
+                }, () => {
+                    alert("You haven't granted RedditClipper Clipboard or Tab permissions.")
+                })
                 doCopy(text);
                 doStore("rc_stored_tab", JSON.stringify(tab))
                 break;
@@ -74,14 +81,4 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
     } catch(e){
         console.error("Reddit Clipper", e);
     }
-
-    text += `[${text.length > 0 ? "Source" : `\n${curr_tab.title}`}](${curr_tab.url})`;
-
-    console.log(text);
-
-    navigator.clipboard.writeText(text).then(async () => {
-        console.log(`Added ${text}`)
-    }, () => {
-        alert("You haven't granted RedditClipper Clipboard or Tab permissions.")
-    })
 });
