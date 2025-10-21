@@ -10,7 +10,7 @@
   },
 
   "browser_action": {
-    "default_icon": "assets/icons/reddit-32.png",
+    "default_icon": "icons/reddit-32.png",
     "default_title": "Clipper",
     "default_popup": "popup/clipboard.html"
   },
