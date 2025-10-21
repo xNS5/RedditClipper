@@ -48,6 +48,8 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
         switch(info.menuItemId){
             case "copy-text":
                 let text = "";
+                if(!info.selectionText) return;
+                
                 if(info.selectionText){
                     let filtered_arr = info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
                     filtered_arr.forEach((string) => {
