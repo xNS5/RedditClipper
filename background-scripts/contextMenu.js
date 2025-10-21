@@ -48,14 +48,17 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
         switch(info.menuItemId){
             case "copy-text":
                 let text = "";
-                if(!info.selectionText) return;
+                if(!info.selectionText) {
+                    console.log("No highlighted text, skipping...");
+                    return
+                };
                 
                 let filtered_arr = info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
                 filtered_arr.forEach((string) => {
                     text += (`> ${string}\n\n`);
                 })
 
-                text += `\n[Source](${tab.url})`;
+                text += `[Source](${tab.url})`;
             
                 navigator.clipboard.writeText(text).then(async () => {
                    console.log("Copied text to clipboard...");
