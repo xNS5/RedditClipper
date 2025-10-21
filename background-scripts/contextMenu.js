@@ -2,37 +2,22 @@
 
 browser.contextMenus.create({
     id: "copy-text",
-<<<<<<< HEAD
-    title: "Copy",
-    contexts: ["all"],
-    icons: {
-        "16": "icons/copy-32.png",
-=======
     title: "Copy Text",
     contexts: ["all"],
     icons: {
         "16": "icons/copy-16.png",
->>>>>>> 1.2.0
         "32": "icons/copy-32.png",
     }
 });
 
 browser.contextMenus.create({
-<<<<<<< HEAD
-    id: "paste-link",
-    title: "Paste Link",
-=======
     id: "copy-link",
     title: "Copy Link", 
->>>>>>> 1.2.0
     contexts: ["all"],
     icons: {
         "16": "icons/link-16.png",
         "32": "icons/link-32.png",
     }
-<<<<<<< HEAD
-})
-=======
 });
 
 browser.contextMenus.create({
@@ -44,7 +29,6 @@ browser.contextMenus.create({
         "32": "icons/paste-32.png",
     }
 });
->>>>>>> 1.2.0
 
 
 function doCopy(text){
