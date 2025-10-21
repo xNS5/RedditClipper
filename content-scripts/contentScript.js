@@ -1,7 +1,14 @@
+"use strict"
+
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     try{
+        console.log("message");
         switch(message.action){
             case "paste-link":
+
+                if(document.activeElement === undefined) return;
+
+                
                 let isRedesign = false;
                 let activeElement = document.activeElement;
                 let highlightedText = message.highlightedText;

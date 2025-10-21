@@ -18,7 +18,8 @@
   "background": {
     "scripts": [
       "background-scripts/contextMenu.js"
-    ]
+    ],
+    "persistent": true
   },
 
   "content_scripts": [
@@ -37,7 +38,7 @@
       "strict_min_version": "55.0"
     }
   },
-
+  
   "permissions": [
     "activeTab",
     "tabs",

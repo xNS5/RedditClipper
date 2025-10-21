@@ -1,3 +1,5 @@
+"use strict"
+
 browser.contextMenus.create({
     id: "copy-text",
     title: "Copy Text",
@@ -60,8 +62,9 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
                 navigator.clipboard.writeText(text).then(async () => {
                     console.log(`Added ${text}`)
                 }, () => {
-                    alert("You haven't granted RedditClipper Clipboard or Tab permissions.")
+                    console.error("You haven't granted RedditClipper Clipboard or Tab permissions.")
                 })
+
                 doCopy(text);
                 doStore("rc_stored_tab", JSON.stringify(tab))
                 break;
