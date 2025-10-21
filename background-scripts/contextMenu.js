@@ -50,23 +50,24 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
                 let text = "";
                 if(!info.selectionText) return;
                 
-                if(info.selectionText){
-                    let filtered_arr = info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
-                    filtered_arr.forEach((string) => {
-                        text += (`> ${string}\n\n`);
-                    })
-                }
+                let filtered_arr = info.selectionText.replace(/((\r?\n|\r|\t)\d*)+(\r?\n|\r)/gm, "\n").trim().split("\n");
+                filtered_arr.forEach((string) => {
+                    text += (`> ${string}\n\n`);
+                })
 
-                text += `[${text.length > 0 ? "Source" : `\n${tab.title}`}](${tab.url})`;
+                text += `\n[Source](${tab.url})`;
             
                 navigator.clipboard.writeText(text).then(async () => {
-                    console.log(`Added ${text}`)
+                   console.log("Copied text to clipboard...");
                 }, (err) => {
-                    console.error("You haven't granted RedditClipper Clipboard or Tab permissions.", err)
+                    console.error("You haven't granted RedditClipper Clipboard or Tab permissions.", err);
                 })
 
                 doCopy(text);
-                doStore("rc_stored_tab", JSON.stringify(tab))
+                doStore("rc_stored_tab", JSON.stringify({
+                    title: tab.title,
+                    url: tab.url
+                }));
                 break;
             case "copy-link":
                 doCopy(`[${tab.title}](${tab.url})`)
