@@ -1,6 +1,9 @@
 name: Publish Signed Firefox Extension
 
-on: [push]
+on:
+  create:
+    tags:
+      - '[0-9]+\.[0-9]+\.[0-9]+'
 
 jobs:
   load-json:
@@ -14,15 +17,15 @@ jobs:
       - name: Check Tag ${{ github.ref }}
         id: validateVersion
         run: |
-          manifestVersion=$(cat ./manifest.json | jq -r '.version' )
-          echo "VERSION: $manifestVersion"
-          if(( $(git tag -l "$manifestVersion" | wc -c ) == 0 )); then
-            echo "NEW VERSION"
-            echo "RUN=true" >> "$GITHUB_OUTPUT"
-            echo "TAG=$manifestVersion" >> "$GITHUB_OUTPUT"
+          ref="${GITHUB_REF#refs/tags/}"
+
+          if [[ "$ref" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "run_jobs=true" >> "$GITHUB_OUTPUT"
+            echo "tag=$ref" >> "$GITHUB_OUTPUT"
+            echo "✅ Detected version tag: $ref"
           else
-            echo "VERSION ALREADY EXISTS"
-            echo "RUN=false" >> "$GITHUB_OUTPUT"
+            echo "run_jobs=false" >> "$GITHUB_OUTPUT"
+            echo "ℹ️ Not a version tag: $GITHUB_REF"
           fi
 
   build-and-publish:
@@ -40,14 +43,14 @@ jobs:
 
       - name: Web-ext Build
         id: web-ext-build
-        uses: kewisch/action-web-ext@v1
+        uses: kewisch/action-web-ext@v1.3
         with:
           cmd: build
           source: ./
 
       - name: Web-ext Sign
         id: web-ext-sign
-        uses: kewisch/action-web-ext@v1
+        uses: kewisch/action-web-ext@v1.3
         with:
           cmd: sign
           source: ${{ steps.web-ext-build.outputs.target }}
@@ -62,13 +65,13 @@ jobs:
           mv ${{ steps.web-ext-sign.outputs.target }} ${{ github.event.repository.name }}.xpi
 
       - name: Create Release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@v1.20.0
         with:
           draft: true
           tag: "refs/tags/${{ needs.load-json.outputs.TAG }}"
           artifacts: "${{ github.event.repository.name }}.xpi"
           bodyFile: "${{ github.workspace }}-CHANGELOG.md"
-          token: ${{ secrets.FF_RELEASE_TOKEN }}
+          # token: ${{ secrets.FF_RELEASE_TOKEN }}
 
 
 
