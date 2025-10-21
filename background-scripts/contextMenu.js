@@ -56,13 +56,11 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
                 }
 
                 text += `[${text.length > 0 ? "Source" : `\n${tab.title}`}](${tab.url})`;
-
-                console.log(text);
             
                 navigator.clipboard.writeText(text).then(async () => {
                     console.log(`Added ${text}`)
-                }, () => {
-                    console.error("You haven't granted RedditClipper Clipboard or Tab permissions.")
+                }, (err) => {
+                    console.error("You haven't granted RedditClipper Clipboard or Tab permissions.", err)
                 })
 
                 doCopy(text);
@@ -74,7 +72,6 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
                 break;
             case "paste-link":
                 let storeTab = JSON.parse(getFromStore("rc_stored_tab"));
-                console.log(storeTab);
                 browser.tabs.sendMessage(tab.id, { action: "paste-link", storeTab: storeTab, highlightedText: info.selectionText})
                     .catch(error => {
                         console.error("Reddit Clipper Error: ", error);
